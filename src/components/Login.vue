@@ -1,11 +1,37 @@
 <script setup>
+import { ref } from 'vue';
 
+// 模拟的用户数据
+const validUser = {
+  email: 'JohnDoe@example.com',
+  password: 'password123'
+};
+
+// 组件状态
+const isVisible = ref(true);
+const email = ref('');
+const password = ref('');
+
+
+const closeModal = () => {
+  isVisible.value = false;
+};
+
+
+const login = () => {
+  if (email.value === validUser.email && password.value === validUser.password) {
+    alert('登錄成功');
+    closeModal();
+  } else {
+    alert('密碼錯誤');
+  }
+};
 
 
 
 </script>
 <template>
- <div class="login-modal" v-if="isVisible">
+  <div class="login" v-if="isVisible">
     <div class="modal-overlay" @click="closeModal"></div>
     <div class="modal-content">
       <button class="close-button" @click="closeModal">×</button>
@@ -33,7 +59,7 @@
 </template>
 <style scoped>
 
-.login-modal {
+.login {
   position: fixed;
   top: 0;
   left: 0;
@@ -104,8 +130,8 @@
 .login-button {
   width: 100%;
   padding: 10px;
-  background-color: #00a86b;
-  color: white;
+  background-color: #a7e0cb;
+ color: white;
   border: none;
   border-radius: 4px;
   font-size: 16px;
@@ -118,13 +144,13 @@
 }
 
 .signup-text a {
-  color: #00a86b;
+  color: #4c7e6c;
   text-decoration: none;
 }
 
 .modal-right {
-  background-color: #00a86b;
-  display: flex;
+  background-color: #a7e0cb;
+  display: flex;q
   align-items: center;
   justify-content: center;
   padding: 40px;

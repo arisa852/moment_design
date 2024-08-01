@@ -1,5 +1,26 @@
 <script>
-
+export default {
+  data() {
+    return {
+      topUsers: [
+        { id: 1, name: '' },
+        { id: 2, name: '' },
+        { id: 3, name: '' }
+      ],
+      latestArticles: [
+        { id: 1, title: '', link: '#', comments: 0, likes: 0 },
+        { id: 2, title: '', link: '#', comments: 0, likes: 3 },
+        { id: 3, title: '', link: '#', comments: 2, likes: 1 }
+      ],
+      posts: [
+        { id: 1, title: '', description: '', date: '', tags: ['完成', '玩'], comments: 0, likes: 0 },
+        { id: 2, title: '', description: '', date: '', tags: ['貓', '聲音', 'DJ'], comments: 0, likes: 3 },
+        { id: 3, title: '', description: '', date: '', tags: ['韋夫夫', '韋夫韋'], comments: 2, likes: 1 },
+        { id: 4, title: '', description: '', date: '', tags: [], comments: 0, likes: 0 }
+      ]
+    };
+  }
+};
 
 
 
@@ -7,203 +28,195 @@
 
 </script>
 <template>
-  
-  <div class="container">
-    <div class="main-content">
-      <div class="sidebar">
-        <nav>
-          <ul>
-            <li>Explore</li>
-            <li>Bookmarks</li>
-            <li>Profile</li>
-            <li>Settings</li>
-          </ul>
-        </nav>
-        <div class="top-users">
-          <h2>Top Users</h2>
-          <ul>
-            <li><img src="#" alt="user1"> Emily Wang</li>
-            <li><img src="#" alt="user2"> Thomas Herring</li>
-            <li><img src="#" alt="user3"> Martha Joyner</li>
-          </ul>
+  <div class="ex-container">
+    <aside class="sidebar">
+      <nav class="explore">
+        <ul>
+          <li><a href="#">書籤</a></li>
+          <li><a href="#">輪廓</a></li>
+          <li><a href="#">設定</a></li>
+        </ul>
+      </nav>
+      <section class="top-users">
+        <h3>熱門用戶</h3>
+        <ul>
+          <li v-for="user in topUsers" :key="user.id">
+            <img src="@/assets/images/2991.png" :alt="user.name">
+            <span>{{ user.name }}</span>
+          </li>
+        </ul>
+      </section>
+      <section class="latest-how-to">
+        <h3>最新操作方法</h3>
+        <ul>
+          <li v-for="article in latestArticles" :key="article.id">
+            <a :href="article.link">{{ article.title }}</a>
+            <span>{{ article.comments }} <i class="icon-comment"></i> {{ article.likes }} <i class="icon-like"></i></span>
+          </li>
+        </ul>
+      </section>
+    </aside>
+    <main class="content">
+      <header class="content-header">
+        <h1>探索</h1>
+        <div class="filter-create">
+          <button>最新的</button>
+          <button class="create-btn">創造 知何</button>
         </div>
-        <div class="latest-how-to">
-          <h2>Latest How To</h2>
-          <ul>
-            <li>把貓變成DJ</li>
-            <li>dwefdw</li>
-            <li>qq</li>
-          </ul>
-        </div>
-      </div>
-      <main class="explore">
-        <div class="explore-header">
-          <h2>Explore</h2>
-          <div class="controls">
-            <select>
-              <option>Latest</option>
-            </select>
-            <button>Create</button>
-          </div>
-        </div>
-        <div class="posts">
-          <div class="post">
-            <img src="#" alt="post image">
-            <div class="post-details">
-              <span>Jun</span>
-              <span>Apr 9</span>
-              <h3>把貓變成DJ</h3>
-              <div class="tags">
-                <span>貓</span>
-                <span>聲音</span>
-                <span>DJ</span>
-              </div>
-              <div class="reactions">
-                <span>0</span>
-                <span>0</span>
-              </div>
+      </header>
+      <section class="posts">
+        <article v-for="post in posts" :key="post.id" class="post-card">
+          <img src="@/assets/images/2991.png" alt="Post Image" class="post-image">
+          <div class="post-content">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.description }}</p>
+            <div class="tags">
+              <span v-for="tag in post.tags" :key="tag">{{ tag }}</span>
             </div>
+            <footer>
+              <span>{{ post.date }}</span>
+              <span>{{ post.comments }} <i class="icon-comment"></i> {{ post.likes }} <i class="icon-like"></i></span>
+            </footer>
           </div>
-          <div class="post">
-            <img src="#" alt="post image">
-            <div class="post-details">
-              <span>Ray Huang</span>
-              <span>Jan 12</span>
-              <h3>dwefdw</h3>
-              <div class="tags">
-                <span>wefw</span>
-                <span>efwefwe</span>
-              </div>
-              <div class="reactions">
-                <span>2</span>
-                <span>1</span>
-              </div>
-            </div>
-          </div>
-          <!-- Add more posts as needed -->
-        </div>
-      </main>
-    </div>
+        </article>
+      </section>
+    </main>
   </div>
-
-
 
 </template>
 
-<style scoped lang="css">
-.container {
+<style scoped>
+.ex-container {
   display: flex;
-  flex-direction: column;
-  max-width: 1280px;
-  justify-content: center;
-  align-items: center;
-  
-}
-
-.main-content {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  margin-top:40px;
- 
+  font-family: Arial, sans-serif;
 }
 
 .sidebar {
-  display: flex;
-  flex-direction: column;
-  width: 250px;
-  padding: 20px;
-  background-color: #f1f1f1;
-  margin: 40px 0;
+  width: 20%;
+  padding: 30px 20px;
+  background-color: #f4f4f4;
+ 
 }
 
-.sidebar nav ul {
+.explore ul {
   list-style: none;
-  padding: 0;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 2px rgba(187, 187, 187, 0.6);
+  border-radius: 15px;
+
 }
 
-.sidebar nav ul li {
-  padding: 10px 0;
+.explore li {
+  margin: 10px 0;
 }
 
-.top-users,
-.latest-how-to {
+.explore a {
+  text-decoration: none;
+  color: #333;
+}
+
+.top-users, .latest-how-to {
   margin-top: 20px;
 }
 
-.top-users ul,
-.latest-how-to ul {
-  list-style: none;
-  padding: 0;
+h3 {
+  margin-bottom: 10px;
 }
 
-.top-users li,
-.latest-how-to li {
+ul {
+  list-style-type: none;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 2px rgba(187, 187, 187, 0.6);
+  border-radius: 15px;
+}
+
+li {
   display: flex;
   align-items: center;
-  padding: 5px 0;
+  margin: 5px 0;
 }
 
-.top-users img {
+img {
   width: 30px;
   height: 30px;
-  margin-right: 10px;
   border-radius: 50%;
+  margin-right: 10px;
 }
 
-.explore {
+.content {
   flex: 1;
   padding: 20px;
 }
 
-.explore-header {
+.content-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-create {
+  display: flex;
+  gap: 10px;
+}
+
+.create-btn {
+  background-color: #00aaff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .posts {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+   gap: 20px;
+}
+
+.post-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
   gap: 20px;
+  flex: 1 1 calc(100% - 20px); /* Adjust the width to make the cards fill the container */
+  box-sizing: border-box;
+}
+
+.post-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.post-content {
+  flex: 1;
+}
+
+.tags span {
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  padding: 3px 8px;
+  margin-right: 5px;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
-.post {
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+.icon-comment::before {
+  content: '💬';
 }
 
-.post img {
-  width: 100%;
-  height: auto;
-}
-
-.post-details {
-  margin-top: 10px;
-}
-
-.post-details .tags {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.post-details .tags span {
-  background-color: #e0e0e0;
-  border-radius: 10px;
-  padding: 5px;
-  margin-right: 5px;
-  margin-top: 5px;
-}
-
-.post-details .reactions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+.icon-like::before {
+  content: '❤️';
 }
 
 </style>

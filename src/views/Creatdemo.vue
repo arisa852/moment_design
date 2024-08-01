@@ -1,103 +1,156 @@
-<script setup>
+<script>
+
+import { ref, onMounted } from 'vue';
+export default {
+  data() {
+    return {
+      topUsers: [
+        { id: 1, name: '' },
+        { id: 2, name: '' },
+        { id: 3, name: '' }
+      ],
+      latestArticles: [
+        { id: 1, title: '', link: '#' },
+        { id: 2, title: '', link: '#' },
+        { id: 3, title: '', link: '#' }
+      ],
+      post: {
+        title: '',
+        date: '2023-03-01',
+        relativeDate: '',
+        tags: ['貓', '畫書', 'DJ'],
+        description: '',
+        steps: ['', '', ''],
+        commentsCount: 0,
+        likesCount: 3
+      },
+      newComment: ''
+    };
+  },
+  methods: {
+    sendComment() {
+      // Add your comment sending logic here
+      console.log('New comment:', this.newComment);
+      this.newComment = '';
+    }
+  }
+};
+
+
+
+
+
+
 
 </script>
 <template>
-<div class="container">
+ <div class="demo-container">
     <aside class="sidebar">
       <nav class="explore">
         <ul>
-          <li><a href="#">Bookmarks</a></li>
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Settings</a></li>
+          <li><a href="#">書籤</a></li>
+          <li><a href="#">輪廓</a></li>
+          <li><a href="#">設定</a></li>
         </ul>
       </nav>
       <section class="top-users">
         <h3>Top Users</h3>
         <ul>
-          <li>
-            <img src="path/to/avatar1.jpg" alt="Emily Wang">
-            <span>Emily Wang</span>
-          </li>
-          <li>
-            <img src="path/to/avatar2.jpg" alt="Thomas Herring">
-            <span>Thomas Herring</span>
-          </li>
-          <li>
-            <img src="path/to/avatar3.jpg" alt="Martha Joyner">
-            <span>Martha Joyner</span>
+          <li v-for="user in topUsers" :key="user.id">
+            <img src="@/assets/images/2991.png" :alt="user.name">
+            <span>{{ user.name }}</span>
           </li>
         </ul>
       </section>
       <section class="latest-how-to">
         <h3>Latest How To</h3>
         <ul>
-          <li><a href="#">把貓變成DJ</a></li>
-          <li><a href="#">dwfedfw</a></li>
-          <li><a href="#">qq</a></li>
+          <li v-for="article in latestArticles" :key="article.id">
+            <a :href="article.link">{{ article.title }}</a>
+          </li>
         </ul>
       </section>
     </aside>
     <main class="content">
       <article class="post">
         <header>
-          <h2>把貓變成DJ</h2>
-          <time datetime="2023-04-15">2 months ago</time>
+          <h2>{{ post.title }}</h2>
+          <time :datetime="post.date">{{ post.relativeDate }}</time>
           <div class="tags">
-            <span>貓</span>
-            <span>聲音</span>
-            <span>DJ</span>
+            <span v-for="tag in post.tags" :key="tag">{{ tag }}</span>
           </div>
         </header>
+        <img src="@/assets/images/2991.png" alt="Post Image" class="post-image">
         <section class="steps">
-          <p>訓練牠們對聲音有反應</p>
+          <p>{{ post.description }}</p>
           <ol>
-            <li>日常讓貓聽音樂</li>
-            <li>讓貓一聽到音樂跳起來</li>
-            <li>變成DJ</li>
+            <li v-for="step in post.steps" :key="step">{{ step }}</li>
           </ol>
         </section>
         <footer>
-          <button>0 comment</button>
-          <button>0 like</button>
+          <button>{{ post.commentsCount }} comments</button>
+          <button>{{ post.likesCount }} likes</button>
         </footer>
       </article>
       <section class="comments">
-        <textarea placeholder="Add a comment..."></textarea>
-        <button class="send-button">Send</button>
+        <textarea v-model="newComment" placeholder="Add a comment..."></textarea>
+        <button class="send-button" @click="sendComment">Send</button>
       </section>
     </main>
   </div>
+
 </template>
-<style scoped lang="css">
-.container {
+
+<style scoped>
+.demo-container {
   display: flex;
-  padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
 .sidebar {
   width: 250px;
-  margin-right: 20px;
+  padding: 20px;
+  background-color: #f4f4f4;
 }
 
-.sidebar nav ul,
-.sidebar .top-users ul,
-.sidebar .latest-how-to ul {
-  list-style-type: none;
-  padding: 0;
+.explore ul {
+  list-style: none;
+  padding: 0 20px;
+  background-color: #fff;
+  border-radius: 15px;
 }
 
-.sidebar nav ul li,
-.sidebar .top-users ul li,
-.sidebar .latest-how-to ul li {
+.explore li {
+  margin: 10px 0;
+}
+
+.explore a {
+  text-decoration: none;
+  color: #333;
+}
+
+.top-users, .latest-how-to {
+  margin-top: 20px;
+}
+
+h3 {
   margin-bottom: 10px;
 }
 
-.top-users ul li {
-  display: flex;
-  align-items: center;
+ul {
+  list-style-type: none;
+  padding: 0 10px;
+  background-color: #fff;
+  border-radius: 15px;
 }
 
-.top-users ul li img {
+li {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+img {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -106,61 +159,73 @@
 
 .content {
   flex: 1;
+  padding: 20px;
 }
 
 .post {
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.post header {
+.post>img{
+  width: 300px;
+  height: 300px;
+  margin-right:40px;
+}
+
+
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.post header h2 {
-  margin: 0;
-}
-
-.post header .tags span {
-  margin-right: 10px;
+.tags span {
   background-color: #e0e0e0;
-  padding: 5px 10px;
-  border-radius: 20px;
+  border-radius: 3px;
+  padding: 3px 8px;
+  margin-right: 5px;
 }
 
 .steps ol {
   padding-left: 20px;
 }
 
-.comments {
+footer {
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+footer button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.comments {
+  margin-top: 20px;
 }
 
 .comments textarea {
-  flex: 1;
+  width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-right: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
 .send-button {
   padding: 10px 20px;
-  background-color: #00aaff;
-  color: #fff;
   border: none;
-  border-radius: 5px;
+  background-color: #00aaff;
+  color: white;
+  border-radius: 4px;
   cursor: pointer;
-}
-
-.send-button:hover {
-  background-color: #0077cc;
 }
 
 </style>
