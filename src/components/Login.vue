@@ -1,13 +1,13 @@
 <script setup>
 import { ref } from 'vue';
 
-// 模拟的用户数据
+
 const validUser = {
   email: 'JohnDoe@example.com',
   password: 'password123'
 };
 
-// 组件状态
+
 const isVisible = ref(true);
 const email = ref('');
 const password = ref('');
@@ -150,8 +150,8 @@ const login = () => {
 
 .modal-right {
   background-color: #a7e0cb;
-  display: flex;q
-  align-items: center;
+  display: flex;
+  align-item: center;
   justify-content: center;
   padding: 40px;
 }

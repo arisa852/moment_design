@@ -2,14 +2,13 @@
 <script setup>
 
 import { ref } from 'vue';
-import login from './Login.vue';
+import LoginModal from '@/components/Login.vue'; // 确保路径正确
 
 const isLoginModalVisible = ref(false);
 
 const showLoginModal = () => {
   isLoginModalVisible.value = true;
 };
-
 
 </script>
 
