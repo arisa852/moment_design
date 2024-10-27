@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     sendComment() {
-      // Add your comment sending logic here
+     
       console.log('New comment:', this.newComment);
       this.newComment = '';
     }

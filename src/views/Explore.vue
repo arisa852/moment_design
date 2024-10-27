@@ -184,7 +184,7 @@ img {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   gap: 20px;
-  flex: 1 1 calc(100% - 20px); /* Adjust the width to make the cards fill the container */
+  flex: 1 1 calc(100% - 20px);
   box-sizing: border-box;
 }
 

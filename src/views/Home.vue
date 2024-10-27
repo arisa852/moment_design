@@ -59,18 +59,24 @@ const getImageUrl = (name) => {
 
 <template>
   <main>
- 
-    <div class="bg-primaryGrey flex justify-center items-center py-40 px-5">
-      <div class="w-52">
-        <h1 class=" text-4xl font-bold">設計你的時刻</h1>
-        <p class=" text-2xl font-normal">從今天起，化繁為簡</p>
-      </div>
-      <div class="content-images">
-        <img src="@/assets/images/banner-1.png" alt="Banner">
+    <!-- 第一個區塊 -->
+    <div class="bg-primaryGrey">
+      <div class="container mx-auto max-w-screen-xl px-5">
+        <div class="flex justify-center items-center">
+          <div>
+            <h1 class="text-2xl font-bold">設計你的時刻</h1>
+            <p class="text-xl font-normal">從今天起，化繁為簡</p>
+          </div>
+          <div class="content-images">
+            <img src="@/assets/images/banner-1.png" alt="Banner">
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- 第二個區塊 -->
     <div class="bg-primaryGrey">
-      <div class="p-5 w-full container mx-auto">
+      <div class="container mx-auto max-w-screen-xl px-5">
         <a-row :gutter="16">
           <a-col :span="8" v-for="item in bannerImages" :key="item.id">
             <banner-card :image="getImageUrl(item.image)" :title="item.title" :desc="item.desc" />
@@ -78,32 +84,83 @@ const getImageUrl = (name) => {
         </a-row>
       </div>
     </div>
-    <div class="py-[30px] bg-primaryGrey">
-      <div class="flex items-center justify-center">
-        <div class="w-[200px] h-[200px] rounded-full bg-themeColor overflow-hidden mr-5">
-          <img src="@/assets/images/pic1.png" alt="Image" class="w-[200px] h-[200px] object-cover" />
+
+    <!-- 第三個區塊 -->
+    <div class="bg-primaryGrey">
+  <div class="container mx-auto max-w-screen-xl px-5">
+    <div class="flex items-center justify-center py-[30px]">
+      <!-- 左側骰子圖 -->
+      <div class="w-[200px] h-[200px] rounded-full bg-themeColor overflow-hidden mr-8">
+        <img src="@/assets/images/pic1.png" alt="Image" class="w-full h-full object-cover" />
+      </div>
+      
+      <!-- 右側骨架屏 - 使用更合理的寬度配置 -->
+      <div class="w-[1000px] border border-secondaryGrey bg-white p-6 rounded-lg flex items-start">
+        <!-- 左側圖片骨架屏 -->
+        <div class="w-[240px] mr-8 flex-shrink-0">
+          <a-skeleton-image />
         </div>
-        <div class="border-secondaryGrey border border-solid bg-white p-4 rounded-lg flex items-center w-[600px]">
-          <a-skeleton-image class="mr-10" />
-          <a-skeleton avatar :paragraph="{ rows: 4 }" />
+        
+        <!-- 右側文字骨架屏 -->
+        <div class="flex-1">
+          <a-skeleton 
+            avatar 
+            :paragraph="{ 
+              rows: 4,
+              width: ['90%', '80%', '70%', '60%']
+            }" 
+          />
         </div>
       </div>
     </div>
-    <div class="bg-primaryGrey seemore-container">
-      <div class="left-column">
-        <img src="../assets/images/moment1.svg" alt="moment">
+  </div>
+</div>
+    <!-- seemore-container 區塊 -->
+    <div class="bg-primaryGrey">
+  <div class="container mx-auto max-w-screen-xl px-5">
+    <div class="flex gap-5 py-5">
+      <div class="flex-1">
+        <img src="../assets/images/moment1.svg" alt="moment" class="w-full h-auto">
       </div>
-      <div class="right-column">
-        <my-card v-for="item in cardInfo" :key="item.id" :image="getImageUrl(item.image)" :name="item.name"
-          :title="item.title" :tags="item.tags" :date="item.date" :desc="item.desc" :comment-num="0" :like-num="0" />
+      <div class="flex-1 flex flex-col space-y-5"> <!-- 添加 flex flex-col gap-5 -->
+        <my-card 
+          v-for="item in cardInfo" 
+          :key="item.id" 
+          :image="getImageUrl(item.image)" 
+          :name="item.name"
+          :title="item.title" 
+          :tags="item.tags" 
+          :date="item.date" 
+          :desc="item.desc" 
+          :comment-num="0" 
+          :like-num="0" 
+        />
       </div>
     </div>
+  </div>
+</div>
   </main>
   <LoginModal v-if="isLoginModalVisible" @close="isLoginModalVisible = false" />
-
 </template>
 
 <style scoped>
+
+.content-images {
+  width: 500px;
+  object-fit: cover;
+  margin-top: 100px;
+  margin-bottom: 40px;
+}
+
+.answer1,
+.step1,
+.design1 {
+  width: 80px;
+  max-width: 100%;
+  margin: 10px auto;
+}
+
+/* 移除舊的 seemore-container 相關樣式，因為已經使用 Tailwind 類替代 */
 
 .box-footer {
   display: flex;
@@ -111,59 +168,6 @@ const getImageUrl = (name) => {
   color: #aaa;
   font-size: 0.9em;
 }
-
-.content-images{
-  width:500px;
-  object-fit: cover;
-  margin-top: 100px;
-  margin-bottom: 40px;
-}
-
-.next-container{
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  /* width: 100%; */
-  padding: 30px 0;
-}
-
-.answer1,.step1,.design1{
-  width: 80px;
-  max-width: 100%;
-  margin:10px auto;
-
-}
-
-.seemore-container{
-    display: flex;
-
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.left-column {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-}
-
-.left-column img {
-    max-width: 100%;
-    width: 500px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.right-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 10px;
-}
-
 
 
 
